@@ -107,33 +107,32 @@ def main():
     img1, cap1 = loadImage(image1_name)
     img2, cap2 = loadImage(image2_name)
 
+
+    # считываем первого изображение
+    ret, old_frame = cap1.read()
+    old_frame = img1
+    # переводим изображение в грейСкейл (черно-белое)
+    old_gray = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
+
+    # считываем второе изображение
+    ret, frame = cap2.read()
+    # переводим изображение в грейСкейл (черно-белое)
+    frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
     # параметры углового детектора Ши-Томаси, который
     # ищет особые точки по которым далее будет рассчитываться оптичискей поток Лукаса-Канаде
     feature_params = dict(maxCorners=100,
                           qualityLevel=0.3,
                           minDistance=7,
                           blockSize=7)
+    # находит N сильнейших углов на изображении
+    p0 = cv2.goodFeaturesToTrack(old_gray, mask=None, **feature_params)
+
 
     # Параметры алгоритма Лукааса - Канаде
     lk_params = dict(winSize=(15, 15),
                      maxLevel=2,
                      criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
-
-    # считываем первого изображение
-    ret, old_frame = cap1.read()
-
-    # переводим изображение в грейСкейл (черно-белое)
-    old_gray = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
-
-    # находит N сильнейших углов на изображении
-    p0 = cv2.goodFeaturesToTrack(old_gray, mask=None, **feature_params)
-
-    # считываем второе изображение
-    ret, frame = cap2.read()
-
-    # переводим изображение в грейСкейл (черно-белое)
-    frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
     # Расчитываем оптический поток методом Лукаса-Канаде
     p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
 
