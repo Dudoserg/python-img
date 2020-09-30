@@ -150,7 +150,7 @@ def main():
         print('(' + str(x1) + ' ; ' + str(y1) + ')' + ' - ' + '(' + str(x2) + ' ; ' + str(y2) + ')')
 
     #отрисовываем и сохраняем совмещенное итоговое изображение
-    createImages(img1, img2, draw_points, "results/s1_2.jpg")
+    createImages(img1, img2, draw_points, "results/variant2_result.jpg")
 
 
 
