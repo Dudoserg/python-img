@@ -110,7 +110,6 @@ def main():
 
     # считываем первого изображение
     ret, old_frame = cap1.read()
-    old_frame = img1
     # переводим изображение в грейСкейл (черно-белое)
     old_gray = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
 
@@ -151,7 +150,7 @@ def main():
         print('(' + str(x1) + ' ; ' + str(y1) + ')' + ' - ' + '(' + str(x2) + ' ; ' + str(y2) + ')')
 
     #отрисовываем и сохраняем совмещенное итоговое изображение
-    createImages(img1, img2, draw_points, "results/1_2.jpg")
+    createImages(img1, img2, draw_points, "results/s1_2.jpg")
 
 
 
